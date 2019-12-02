@@ -9,7 +9,7 @@ Here we will discuss how to set up a working client for data exfiltration.
 ###### Note 2: Be careful when using AWS Regions, specially when creating lambda functions and S3 buckets.
 ###### Note 3: Try to follow the steps in order
 
-##### Client Setup
+#### Client Setup
 Open `standaloneClient_template.py` and modify the following lines with desired values.  
 
 *Line 11*  Modify partition size  
@@ -19,14 +19,14 @@ Open `standaloneClient_template.py` and modify the following lines with desired 
 *Line 85* Modify with AWS Keys  
 `client.awsConnect('<ACCESS_KEY_ID>','<SECRET_ACCESS_KEY_ID>','<REGION>')`  
 
-##### IAM Console
+#### IAM Console
 Go to AWS IAM console and create a role (Remember the ARN name) with the following permissions:  
 
 - AWSLambdaFullAccess
 - AmazonS3FullAccess
 - CloudWatchFullAccess
 
-##### S3 Console
+#### S3 Console
 We will now create 2 buckets.  
 The **exfiltration bucket** in which we will save out exfiltrated files (their partitions).  
 The **template bucket** in which we will save the template used for creating the lambda functions required.  
@@ -34,14 +34,14 @@ The **template bucket** in which we will save the template used for creating the
 
 Create 2 buckets with default config and remember their names. One will be used for exfiltration and the other one for our templates.  
 
-##### Sample Function Setup
+#### Sample Function Setup
 Open `sampleFunction_template.py`.  
 *Line 6*  Modify with the exfiltration bucket name  
 `bucket_name = "<EXFILTRATION_BUCKET_NAME>"`  
 
 Compress the function and upload it to the template bucket created before. Remember the compressed function name. We should now have a sampleFunction_template.zip inside our template bucket.  
 
-##### Lambda console setup
+#### Lambda console setup
 Create a lambda function called `<Insert orchestrator name>`.  
 Give the function the role previously created. This can be done by scrolling down a bit one the function is created.  
 
