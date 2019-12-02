@@ -1,7 +1,9 @@
 # standaloneClient
 ## Usage
 #### Client
-`py clientName.py "Path_to_file"`
+`py clientName.py "Path_to_file"`  
+Example:  
+`py clientName.py "C:\Users\SomeUser\Desktop\test.txt"`
 #### Decrypter
 ###### Note: If not sure about hostname and filename, check S3 Bucket
 `py decrypter.py "Hostname" "Filename"`  
