@@ -22,7 +22,7 @@ class Client():
 			aws_secret_access_key = aws_secret_access_key,
 			region_name = region_name
 		)
-		self.aws_lambda = self.session.client('lambda')
+		self.aws_lambda = self.session.client('lambda', verify = False)
 
 	def exfiltrate(self):
 		print('--------------------------------------------------------------------------------')
