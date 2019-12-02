@@ -23,8 +23,8 @@ for file in os.listdir(folder):
 session = boto3.session.Session(aws_access_key_id = '<AWS_ACCESS_KEY_ID>',
  								aws_secret_access_key = '<AWS_SECRET_ACCESS_KEY_ID>',
  								region_name = 'us-east-2')
-aws_s3_client = session.client('s3')
-aws_s3_resource = session.resource('s3')
+aws_s3_client = session.client('s3', verify = False)
+aws_s3_resource = session.resource('s3', verify = False)
 
 #----------Here we get the all the fileNames in our bucket--------------
 list_response = aws_s3_client.list_objects(
