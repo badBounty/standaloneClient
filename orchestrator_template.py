@@ -4,6 +4,9 @@ import math
 import uuid
 import sys
 
+template_bucket_name = '<TEMPLATES_BUCKET>'
+compressed_function_name = '<COMPRESSED_FUNCTION_NAME>'
+
 def lambda_handler(event, context):
     
     aws_s3 = boto3.resource('s3')
@@ -26,8 +29,8 @@ def lambda_handler(event, context):
         Role = '<LAMBDA_S3_IAM_ROLE>',
         Handler = 'sampleFunction.lambda_handler',
         Code = {
-            'S3Bucket': '<TEMPLATES_BUCKET>',
-            'S3Key': '<COMPRESSED_FUNCTION_NAME>'
+            'S3Bucket': template_bucket_name,
+            'S3Key': compressed_function_name
             },
         Timeout = 30,
         MemorySize = 512 
