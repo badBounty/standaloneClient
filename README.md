@@ -22,7 +22,7 @@ Open `standaloneClient_template.py` and modify the following lines with desired 
 
 Modify first lines with required data. You will need  
 
-- fernet_key (You will need the same key for the decrypter. The key can be generated in a separate script with Fernet.generate_key())
+- fernet_key (You will need the same key for the decrypter. The key can be generated in a separate script with `Fernet.generate_key()`)
 - orchestrator_function_name (Remember it for later)
 - aws_access_key_id
 - aws_secret_access_key
