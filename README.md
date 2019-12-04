@@ -1,4 +1,6 @@
 # standaloneClient
+## About
+Check out how it works pdf for a general explanation on how the program functions.
 ## Usage
 #### Client
 `py clientName.py "Path_to_file"`  
