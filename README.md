@@ -20,7 +20,7 @@ Here we will discuss how to set up a working client for data exfiltration.
 ###### Note 3: Try to follow the steps in order
 
 #### Client Setup
-Open `standaloneClient_template.py` and modify the following lines with desired values.  
+Open `standaloneClient_template.py`.  
 
 Modify first lines with required data. You will need  
 
@@ -43,7 +43,7 @@ The **exfiltration bucket** in which we will save out exfiltrated files (their p
 The **template bucket** in which we will save the template used for creating the lambda functions required.  
 (If the above sounds like gibberish, refer to the explanation on how the exfiltration works)  
 
-Create 2 buckets with default config and remember their names. One will be used for exfiltration and the other one for our templates.  
+Create 2 buckets with default config and remember their names (names must be all lowercase). One will be used for exfiltration and the other one for our templates.  
 
 #### Sample Function Setup
 Open `sampleFunction_template.py`.  
@@ -51,7 +51,7 @@ Modify first lines with required data. You will need
 
 - exfiltration_bucket_name
 
-Compress the function and upload it to the template bucket created before. Remember the compressed function name. We should now have a sampleFunction_template.zip inside our template bucket.  
+Compress the function (you can use Windows default compressor) and upload it to the template bucket created before. Remember the compressed function name. We should now have a sampleFunction_template.zip inside our template bucket.  
 
 #### Lambda console setup
 Create a lambda function called `<Insert orchestrator name>`.  
