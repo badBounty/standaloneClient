@@ -6,6 +6,7 @@ import sys
 
 template_bucket_name = '<TEMPLATES_BUCKET>'
 compressed_function_name = '<COMPRESSED_FUNCTION_NAME>'
+lambda_s3_iam_role = '<LAMBDA_S3_IAM_ROLE>'
 
 def lambda_handler(event, context):
     
@@ -26,7 +27,7 @@ def lambda_handler(event, context):
         aws_lambda.create_function(
         FunctionName = lambda_name,
         Runtime = 'python3.7',
-        Role = '<LAMBDA_S3_IAM_ROLE>',
+        Role = lambda_s3_iam_role,
         Handler = 'sampleFunction.lambda_handler',
         Code = {
             'S3Bucket': template_bucket_name,
