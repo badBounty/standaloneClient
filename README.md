@@ -17,7 +17,7 @@ Here we will discuss how to set up a working client for data exfiltration.
 
 ###### Note 1: Use python 3.x
 ###### Note 2: Be careful when using AWS Regions, specially when creating lambda functions and S3 buckets.
-###### Note 3: Try to follow the steps in order
+###### Note 3: Try to follow the steps in order :)
 
 #### Client Setup
 Open `standaloneClient_template.py`.  
