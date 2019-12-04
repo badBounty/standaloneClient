@@ -5,6 +5,7 @@ import os
 import math
 import socket
 from cryptography.fernet import Fernet
+import urllib3
 
 key = b'<FERNET_KEY>'
 orchestrator_function_name = '<ORCHESTRATOR_FUNCTION_NAME>'
@@ -86,6 +87,7 @@ class Client():
 			self.aws_lambda.delete_function(FunctionName = lambda_list[i])
 
 
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 client = Client()
 client.awsConnect(aws_access_key_id, aws_secret_access_key, region)
 client.setFileName(str(sys.argv[1]))
