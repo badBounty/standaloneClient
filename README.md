@@ -63,8 +63,9 @@ Modify first lines with required data. You will need
 
 - template_bucket_name
 - compressed_function_name
+- lambda_s3_iam_role (The ARN)
 
-Increase the timeout of this function to 1 minute and memory to 512MB  
+Increase the timeout of this function to 5 minute and memory to 512MB. The timeout will depend on the size of the file you plan on exfiltrating.  
 
 #### Decrypter Setup
 Files saved inside our exfiltration bucket are encrypted so... we ned a way to decrypt them. Lets se how to do this.  
