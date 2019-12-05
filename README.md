@@ -22,6 +22,6 @@ Go to AWS IAM console and create a role (Remember the ARN name) with the followi
 - AmazonS3FullAccess
 - CloudWatchFullAccess
 
-###### TODO----Run `pip install -r requirements.txt`-----
+###### Run `pip install -r requirements.txt`
 
 ###### Run `py setup.py` and follow the prompts
