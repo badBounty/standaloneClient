@@ -77,7 +77,7 @@ else:
 	reconstructed_file_name = 'reconstructedFile.txt'
 
 #----------We create a reconstruction file--------------
-with open(reconstructed_file_name, wb) as finalFile:
+with open(reconstructed_file_name, 'wb') as finalFile:
 	#---------- fileNames are partitionNames--------
 	for file in fileNames:
 
