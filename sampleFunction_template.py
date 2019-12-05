@@ -1,7 +1,6 @@
 import json
 import boto3
 
-exfiltration_bucket_name = "<EXFILTRATION_BUCKET_NAME>" 
 
 def lambda_handler(event, context):
 

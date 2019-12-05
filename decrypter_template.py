@@ -7,11 +7,6 @@ from cryptography.fernet import Fernet
 import urllib3
 
 
-key = b'<FERNET_KEY>'
-aws_access_key_id = '<AWS_ACCESS_KEY_ID>'
-aws_secret_access_key = '<AWS_SECRET_ACCESS_KEY_ID>'
-region = '<REGION>'
-exfiltration_bucket_name = '<EXFILTRATION_BUCKET_NAME>'
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 

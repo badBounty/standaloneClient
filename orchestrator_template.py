@@ -4,9 +4,6 @@ import math
 import uuid
 import sys
 
-template_bucket_name = '<TEMPLATES_BUCKET>'
-compressed_function_name = '<COMPRESSED_FUNCTION_NAME>'
-lambda_s3_iam_role = '<LAMBDA_S3_IAM_ROLE>'
 
 def lambda_handler(event, context):
     
