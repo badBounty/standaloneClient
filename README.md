@@ -2,7 +2,7 @@
 ## About
 The program follows the following diagram. Explanation on how each part function is present on standaloneClient pdf file.  
 
-![StandaloneClient diagram](standaloneClient.jpg?raw=true "Standalone Client Diagram")
+![StandaloneClient diagram](Standalone_client_1.png?raw=true "Standalone Client Diagram")
 
 ## Usage
 #### Client
