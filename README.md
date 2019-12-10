@@ -1,6 +1,9 @@
 # standaloneClient
 ## About
-Check out standaloneClient pdf for a general explanation on how the program functions.
+The program follows the following diagram. Explanation on how each part function is present on standaloneClient pdf file.  
+
+![StandaloneClient diagram](standaloneClient.jpg?raw=true "Standalone Client Diagram")
+
 ## Usage
 #### Client
 `py clientName.py "Path_to_file"`  
