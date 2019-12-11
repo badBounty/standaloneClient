@@ -1,4 +1,4 @@
-# standaloneClient
+# AWS Lambda Exfil Tool [PoC]
 ## About
 The program follows the following diagram. Explanation on how each part functions is present on standaloneClient pdf file.  
 
