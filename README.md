@@ -4,6 +4,10 @@ The program follows the following diagram. Explanation on how each part function
 
 ![StandaloneClient diagram](Standalone_client_1.png?raw=true "Standalone Client Diagram")
 
+Here we have a small PoC on how the program works
+
+![StandaloneClientGif](standaloneClient.gif)
+
 ## Usage
 #### Client
 `py clientName.py "Path_to_file"`  
