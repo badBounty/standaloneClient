@@ -1,12 +1,14 @@
 # AWS Lambda Exfil Tool [PoC]
+
+Here we have a small PoC on how the program works  
+
+![StandaloneClientGif](standaloneClient.gif)
+
 ## About
 The program follows the following diagram. Explanation on how each part functions is present on standaloneClient pdf file.  
 
 ![StandaloneClient diagram](Standalone_client_1.png?raw=true "Standalone Client Diagram")
 
-Here we have a small PoC on how the program works
-
-![StandaloneClientGif](standaloneClient.gif)
 
 ## Usage
 #### Client
