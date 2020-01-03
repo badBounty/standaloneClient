@@ -37,3 +37,6 @@ Go to AWS IAM console and create a role (Remember the ARN name) with the followi
 
 #### Partitions
 Partition size is by default 100 bytes, this can be changed by accessing standaloneClient_template.py and modifiying the value. This could be helpful when exfiltrating large files, as the time it would take to exfiltrate 1GB of data with 100B partitions will be really significant
+
+#### Supported Files
+The tool supports txt, csv and xlsx files but every file that is text based (For example a .py file) will be exfiltrated succesfully
