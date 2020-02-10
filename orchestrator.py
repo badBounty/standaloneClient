@@ -25,7 +25,7 @@ def lambda_handler(event, context):
         FunctionName = lambda_name,
         Runtime = 'python3.7',
         Role = lambda_s3_iam_role,
-        Handler = 'sampleFunction_template.lambda_handler',
+        Handler = 'sampleFunction.lambda_handler',
         Code = {
             'S3Bucket': template_bucket_name,
             'S3Key': compressed_function_name
