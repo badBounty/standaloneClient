@@ -2,12 +2,12 @@
 
 Here we have a small PoC on how the program works  
 
-![StandaloneClientGif](standaloneClient.gif)
+![StandaloneClientGif](media/standaloneClient.gif)
 
 ## About
 The program follows the following diagram. Explanation on how each part functions is present on standaloneClient pdf file.  
 
-![StandaloneClient diagram](Standalone_client_1.png?raw=true "Standalone Client Diagram")
+![StandaloneClient diagram](media/Standalone_client_1.png?raw=true "Standalone Client Diagram")
 
 
 ## Usage
