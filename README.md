@@ -20,6 +20,11 @@ Example:
 `py decrypter.py -n "Hostname" -i "Filename"`  
 Example after exfiltrating test.txt:  
 `py decrypter.py -n "ID4A0E" -i "test"`
+
+Follow the prompts for decrypter setup, this will set AWS keys as well as region and bucket name.  
+Decrypter setup is based on `decrypterConfig.json` (Which will be created after the first time decrypter is ran).  
+If AWS account / bucket needs to be changed, please modify the above mentioned json file.
+
 ## Setup
 
 ###### Note: Use python 3.x  

@@ -7,7 +7,45 @@ import argparse
 from cryptography.fernet import Fernet
 import urllib3
 
+#---------- This will run the first time decrypter is opened --------------
+try:
+	with open('dectypterConfig.json') as json_file:
+		data = json.load(json_file)
+except FileNotFoundError:
+	data = {
+	'config': False,
+	'key': b'',
+	'aws_access_key_id': '',
+	'aws_secret_access_key': '',
+	'region': '',
+	'exfiltration_bucket_name': ''
+	}
 
+if not data['config']:
+	aws_access_key = input("Enter AWS access key: ")
+	aws_secret_access_key = input("Enter AWS secret access key: ")
+	region_name = input("Enter target bucket region: ")
+	fernet_key = input("Enter encryption key: ")
+	exfiltration_bucket_name = input("Enter the name of the bucket that contains the file to decrypt: ")
+
+	data['key'] = fernet_key
+	data['aws_access_key_id'] = aws_access_key
+	data['aws_secret_access_key'] = aws_secret_access_key
+	data['region'] = region_name
+	data['exfiltration_bucket_name'] = exfiltration_bucket_name
+	data['config'] = True
+
+	with open('dectypterConfig.json', 'w') as outfile:
+		json.dump(data, outfile)
+#----------------------------------------------------------------------------
+with open('dectypterConfig.json') as json_file:
+    data = json.load(json_file)
+
+key = data['key'].encode()
+aws_access_key_id = data['aws_access_key_id']
+aws_secret_access_key = data['aws_secret_access_key']
+region = data['region']
+exfiltration_bucket_name = data['exfiltration_bucket_name']
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
