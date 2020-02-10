@@ -17,9 +17,9 @@ Example:
 `py clientName.py -s 100 -i "C:\Users\SomeUser\Desktop\test.txt"`
 #### Decrypter
 ###### Note: If not sure about hostname and filename, check S3 Bucket after exfiltration
-`py decrypter.py "Hostname" "Filename"`  
+`py decrypter.py -n "Hostname" -i "Filename"`  
 Example after exfiltrating test.txt:  
-`py decrypter.py "ID4A0E" "test"`
+`py decrypter.py -n "ID4A0E" -i "test"`
 ## Setup
 
 ###### Note: Use python 3.x  
