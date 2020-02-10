@@ -1,6 +1,6 @@
 # AWS Lambda Exfil Tool [PoC]
 
-Here we have a small PoC on how the program works  
+Here we have a small PoC on how the program works (The gif is somewhat outdated but the idea is the same)
 
 ![StandaloneClientGif](media/standaloneClient.gif)
 
