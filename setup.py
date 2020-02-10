@@ -152,10 +152,10 @@ with open('decrypter.py','w') as f:
 #######Standalone Client
 print("Client setup...")
 #------------------standaloneClient template------------------
-with open('standaloneClient_template.py','r') as f:
+with open('standaloneClient.py','r') as f:
 	lines = f.readlines()
 	#print(lines)
-with open('standaloneClient_template.py','w') as f:
+with open('standaloneClient.py','w') as f:
 	lines.insert(9, str("key = " + "b" + "'" + fernet_key.decode() + "'\n"))
 	lines.insert(10, str("aws_access_key_id = " + "'" + aws_access_key + "'\n"))
 	lines.insert(11, str("aws_secret_access_key = " + "'" + aws_secret_access_key + "'\n"))
