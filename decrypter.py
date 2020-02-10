@@ -3,12 +3,27 @@ import sys
 import json
 import os
 import math
+import argparse
 from cryptography.fernet import Fernet
 import urllib3
 
 
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+
+parser = argparse.ArgumentParser()
+
+parser.add_argument('-n', '--hostname', help = "Host of the file, check readme for example",
+					required = True,
+					action = 'store')
+parser.add_argument('-i', '--input', help = "File to be decrypted",
+					required = True,
+					action = 'store')
+
+args = parser.parse_args()
+
+if not os.path.exists("decrypterOutput/"):
+	os.makedirs("decrypterOutput/")
 
 #----------Enviroment Reset (Delete old files, etc)--------------
 if os.path.exists("reconstructedFile.txt"):
@@ -45,7 +60,7 @@ fileNames = []
 for content in list_response_contents:
 	name = content['Key'].replace('.txt','')
 	#-----------We only get files which match our argv arguments----------
-	if sys.argv[1] in name and sys.argv[2] in name:
+	if args.hostname in name and args.input in name:
 		fileNames.append(name)
 
 #----------We remove .txt for sorting, just in case--------------
@@ -70,14 +85,14 @@ for file in fileNames:
 
 #----------We check the correct extension-------------
 if "xlsx" in fileNames[0]:
-	reconstructed_file_name = 'reconstructedFile.xlsx'
+	reconstructed_file_name = args.hostname + '-' + args.input +'.xlsx'
 elif "csv" in fileNames[0]:
-	reconstructed_file_name = 'reconstructedFile.csv'
+	reconstructed_file_name = args.hostname + '-' + args.input +'.csv'
 else:
-	reconstructed_file_name = 'reconstructedFile.txt'
+	reconstructed_file_name = args.hostname + '-' + args.input +'.txt'
 
 #----------We create a reconstruction file--------------
-with open(reconstructed_file_name, 'wb') as finalFile:
+with open('decrypterOutput/' + reconstructed_file_name, 'wb') as finalFile:
 	#---------- fileNames are partitionNames--------
 	for file in fileNames:
 
