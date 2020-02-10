@@ -14,7 +14,7 @@ while clientEnteredData:
 	aws_secret_access_key = input("Enter AWS secret access key: ")
 	region_name = input("Enter preferred region: ")
 	fernet_key = Fernet.generate_key()
-	orchestrator_name = 'exfiltration_orchestrator'
+	orchestrator_name = input("Enter a cool name for your orchestrator function: ")
 	exfiltration_bucket_name = input("Enter a name for your exfiltration bucket, remember names must be lowecase and unique: ")
 	template_bucket_name = input("Enter a name for your template bucket, remember names must be lowecase and unique: ")
 	iam_role_arn = input("Enter the iam_role arn: ")
