@@ -13,7 +13,7 @@ class Client():
 	f = Fernet(key)
 
 	def __init__(self, partitionSize):
-		self.partitionSize = partitionSize
+		self.partitionSize = int(partitionSize) * 1000
 
 	def setFileName(self, filePath):
 		self.filePath = filePath
