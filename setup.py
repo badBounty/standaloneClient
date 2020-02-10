@@ -31,7 +31,7 @@ while clientEnteredData:
 	if client_data == 'y':
 		clientEnteredData = False
 
-	print('Your encryption/decryption key is: ' + fernet_key.decode() + '\nRemember it just in case!')
+	print('Your encryption/decryption key is: ' + fernet_key.decode() + '\nSave it!, this is needed for Decrypter setup')
 
 print('Connecting to aws...')
 

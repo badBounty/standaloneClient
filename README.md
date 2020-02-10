@@ -38,7 +38,9 @@ Go to AWS IAM console and create a role (Remember the ARN name) with the followi
 
 ###### Run `pip install -r requirements.txt`
 
-###### Run `py setup.py` and follow the prompts
+###### Run `py setup.py` and follow the prompts for client setup
+
+###### Decrypter will be set up the first time it's ran, follow the prompts
 
 #### Partitions
 Please take in account the size of the file to be exfiltrated when defining the partition size.
