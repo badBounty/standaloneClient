@@ -168,7 +168,13 @@ with open('standaloneClient.py','w') as f:
 print("...All files modified!")
 print('-------------------------------------------------')
 print('Setup is complete!')
+print('Cleaning up...')
 
+import os
+
+os.remove("orchestrator.zip")
+os.remove("sampleFunction.zip")
+print("Finished!")
 
 
 

