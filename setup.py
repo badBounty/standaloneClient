@@ -168,6 +168,19 @@ with open('standaloneClient.py','w') as f:
 	lines.insert(13, str("orchestrator_function_name = " + "'" + orchestrator_name + "'\n"))
 	f.write("".join(lines))
 
+##### Decrypter config
+data = {
+	'config': True,
+	'key': fernet_key.decode(),
+	'aws_access_key_id': aws_access_key,
+	'aws_secret_access_key': aws_secret_access_key,
+	'region': region_name,
+	'exfiltration_bucket_name': exfiltration_bucket_name
+	}
+
+with open('dectypterConfig.json', 'w') as outfile:
+	json.dump(data, outfile)
+
 
 
 print("...All files modified!")

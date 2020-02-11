@@ -22,6 +22,7 @@ except FileNotFoundError:
 	}
 
 if not data['config']:
+	print('It seems decrypter is not configured, configuring...')
 	aws_access_key = input("Enter AWS access key: ")
 	aws_secret_access_key = input("Enter AWS secret access key: ")
 	region_name = input("Enter target bucket region: ")
@@ -38,8 +39,13 @@ if not data['config']:
 	with open('dectypterConfig.json', 'w') as outfile:
 		json.dump(data, outfile)
 #----------------------------------------------------------------------------
+print('Decrypter config parameters are under dectypterConfig.json')
+print('Current decrypter information is')
+
 with open('dectypterConfig.json') as json_file:
     data = json.load(json_file)
+
+print(data)
 
 key = data['key'].encode()
 aws_access_key_id = data['aws_access_key_id']
