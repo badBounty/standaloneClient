@@ -40,12 +40,12 @@ if not data['config']:
 		json.dump(data, outfile)
 #----------------------------------------------------------------------------
 print('Decrypter config parameters are under dectypterConfig.json')
-print('Current decrypter information is')
+#print('Current decrypter information is')
 
 with open('dectypterConfig.json') as json_file:
     data = json.load(json_file)
 
-print(data)
+#print(data)
 
 key = data['key'].encode()
 aws_access_key_id = data['aws_access_key_id']
