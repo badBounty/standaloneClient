@@ -4,7 +4,8 @@ import json
 from botocore.exceptions import ClientError
 from zipfile import ZipFile
 
-
+import sys
+import botocore
 
 print('Welcome to AWS exfiltration project!')
 clientEnteredData = True
@@ -58,10 +59,18 @@ while exfiltrationBucketInCreation:
 				)
 		exfiltrationBucketInCreation = False
 		print('...Exfiltration bucket created!')
-	except ClientError:
+	except ClientError as e:
+		if 'InvalidAccessKeyId' in str(e):
+			print('The access_key provided is not valid, please check and restart setup')
+			sys.exit()
+		if 'SignatureDoesNotMatch' in str(e):
+			print('The secret_access_key provided is not valid, please check and restart setup')
+			sys.exit()
 		print('That bucket name already exists!, please select another name')
 		exfiltration_bucket_name = input("Enter a name for your exfiltration bucket, remember names must be lowecase and unique: ")
-
+	except botocore.exceptions.EndpointConnectionError:
+		print('Invalid region provided, check and restart setup')
+		sys.exit()
 
 templateBucketInCreation = True
 while templateBucketInCreation:
@@ -120,18 +129,30 @@ zipObj.close()
 s3_resource.meta.client.upload_file('orchestrator.zip', template_bucket_name, 'orchestrator.zip')
 #-----------------Create lambda function based on previous template--------------
 aws_lambda = session.client('lambda')
-aws_lambda.create_function(
-        FunctionName = orchestrator_name,
-        Runtime = 'python3.7',
-        Role = iam_role_arn,
-        Handler = 'orchestrator.lambda_handler',
-        Code = {
-            'S3Bucket': template_bucket_name,
-            'S3Key': 'orchestrator.zip'
-            },
-        Timeout = 300,
-        MemorySize = 512 
-        )
+creatingLambda = True
+while creatingLambda:
+	try:
+		aws_lambda.create_function(
+       		FunctionName = orchestrator_name,
+        	Runtime = 'python3.7',
+        	Role = iam_role_arn,
+        	Handler = 'orchestrator.lambda_handler',
+        	Code = {
+            	'S3Bucket': template_bucket_name,
+            	'S3Key': 'orchestrator.zip'
+            	},
+        	Timeout = 300,
+        	MemorySize = 512 
+        	)
+		creatingLambda = False
+	except Exception as e:
+		if 'ResourceConflictException' in str(e):
+			print('That function already exists!, please choose another name')
+		else:
+			print(e)
+			print('Unknown exception, quitting! Buckets may have been already created, please delete them before running setup again')
+			sys.exit()
+		orchestrator_name = input("Enter a cool name for your orchestrator function: ")
 
 #######Standalone Client
 print("Client setup...")
