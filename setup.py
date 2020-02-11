@@ -46,9 +46,18 @@ print('-------------------------------------------------')
 
 s3_client = session.client('s3')
 
+buckets = s3_client.list_buckets()
+bucket_list = list()
+for bucket in buckets['Buckets']:
+	bucket_list.append(bucket['Name'])
+
 exfiltrationBucketInCreation = True
 while exfiltrationBucketInCreation:
 	print('Creating exfiltration bucket...')
+	if exfiltration_bucket_name in bucket_list:
+		client_input = input("Bucket " + exfiltration_bucket_name + 'already exists in your account, do you wish to use this one as exfiltration bucket?[y/n]')
+		if client_input == 'y':
+			break
 	try:
 		s3_client.create_bucket(
 				ACL = 'private',
