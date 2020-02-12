@@ -41,6 +41,11 @@ class Client():
 			print('Ending...')
 			return
 
+		if not args.force and partitions > 500:
+			print('Too many partitions! Increase partition size or force desired partitions with -f (With caution)')
+			return
+
+
 		#----------We create Json with amout of partitions for the orchestrator--------------
 		orqPayload = {
     		"partitions": partitions
@@ -98,6 +103,9 @@ parser.add_argument('-s', '--size', help = "Partition size in Kb, 1000Kb = 1Mb",
 					action = 'store')
 parser.add_argument('-i', '--input', help = "File to be exfiltrated",
 					required = True,
+					action = 'store')
+parser.add_argument('-f', '--force', help = "Deactivates partition limitation (Be careful!)",
+					required = False,
 					action = 'store')
 
 args = parser.parse_args()
