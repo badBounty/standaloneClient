@@ -12,7 +12,7 @@ The program follows the following diagram. Explanation on how each part function
 
 ## Usage
 #### Client
-`py clientName.py -s <Partition size in kb> -i <File to exfiltrate>`  
+`py clientName.py -s <Partition size in kb> -i <File to exfiltrate> -f <OPTIONAL: Disable max partitions (500)>`  
 Example:  
 `py clientName.py -s 100 -i "C:\Users\SomeUser\Desktop\test.txt"`
 #### Decrypter
@@ -43,7 +43,7 @@ Go to AWS IAM console and create a role (Remember the ARN name) with the followi
 ###### Decrypter will be set up the first time it's ran, follow the prompts
 
 #### Partitions
-Please take in account the size of the file to be exfiltrated when defining the partition size.
+Please take in account the size of the file to be exfiltrated when defining the partition size. By default the max partition number is set to 500. This means that the file to be exfiltrated must weigh `500*partitionSize` or less. This can be overrided by adding `-f` to the client call.   
 
 #### Supported Files
 The tool supports txt, csv and xlsx files but every file that is text based (For example a .py file) will be exfiltrated succesfully.
