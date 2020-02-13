@@ -21,8 +21,8 @@ Example:
 Example after exfiltrating test.txt:  
 `py decrypter.py -n "ID4A0E" -i "test"`
 
-Follow the prompts for decrypter setup, this will set AWS keys as well as region and bucket name.  
-Decrypter setup is based on `decrypterConfig.json` (Which will be created after the first time decrypter is ran).  
+The decrypter is going to be setup at the first `setup.py` run.    
+Decrypter setup is based on `decrypterConfig.json` so the keys used for connection, as well as exfiltration buckets can be changed.  
 If AWS account / bucket needs to be changed, please modify the above mentioned json file.
 
 ## Setup
